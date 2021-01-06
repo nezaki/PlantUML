@@ -1,0 +1,85 @@
+@startuml
+
+skinparam ParticipantPadding 20
+skinparam BoxPadding 10
+skinparam maxMessageSize 200
+
+' hide footbox
+' autoactivate on
+
+' comment
+/' comment '/
+
+actor Alice
+participant "app: Application" as app
+participant "cm: ContentManager" as cm
+participant "item: DownloadItem" as item
+
+box "box"
+    entity Foo4
+    database Foo5
+    collections Foo6
+end box
+
+autonumber
+
+title Title
+
+== test ==
+
+[-> app: memo
+
+activate app
+app->cm: findItem(itemId)
+note left
+  This is **bold**
+  This is //italics//
+  This is ""monospaced""
+  This is --stroked--
+  This is __underlined__
+  This is ~~waved~~
+end note
+
+activate cm
+cm->cm: lookup(itemId)
+
+alt item found
+    cm-->app: item
+else not found
+    cm->>item: Asynchronous Message
+    activate item
+
+    item ->]
+
+    note over cm
+        Download and parse manifest, save in db
+    end note
+
+    cm <- item
+    deactivate item
+
+    ||200||
+
+    app <- cm
+
+    {start} app -> cm
+    cm -> item
+    cm <- item
+    {end} app <- cm
+    !pragma teoz true
+    {start} <-> {end} : some time
+
+    deactivate cm
+
+    note left app: * See //track-selection// flow
+end group
+
+== test2 ==
+
+ref over app, app: tmp
+
+[<- app: memo
+
+deactivate app
+
+@enduml

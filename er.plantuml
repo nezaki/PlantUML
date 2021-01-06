@@ -1,0 +1,49 @@
+@startuml
+
+!define EDIT_ENTITY #E2EFDA-C6E0B4
+!define METAL #F2F2F2-D9D9D9
+!define MASTER_MARK_COLOR AAFFAA
+!define TRANSACTION_MARK_COLOR FFAA00
+!define VIEW_MARK_COLOR F7FE2E
+
+' comment
+/' comment '/
+
+package "MySQL" as mysql <<Rectangle>> {
+
+    note as note1
+        共通項目
+
+        created_by INT NOTNULL
+        modified_by INT
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        modified_at TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    end note
+
+    entity "example" as example <<T,TRANSACTION_MARK_COLOR>> EDIT_ENTITY {
+        + id INT [PK] AI
+        --
+        name VARCHAR(64) NOTNULL
+        email VARCHAR(255)
+        deleted TINYINT NOTNULL DEFAULT '0'
+    }
+    note top of example
+        UNIQUE KEY (`email`)
+    end note
+
+    entity "example_relation" as example_relation <<T,TRANSACTION_MARK_COLOR>> EDIT_ENTITY {
+        + id INT [PK] AI
+        --
+        # example_id INT [FK] NOTNULL
+    }
+    example ||-|{ example_relation
+
+    entity "settings" as settings <<M,MASTER_MARK_COLOR>> {
+        + id INT(11) [PK]
+        --
+        name VARCHAR(32) NOTNULL
+    }
+
+}
+
+@enduml
