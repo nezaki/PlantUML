@@ -11,14 +11,7 @@
 
 package "MySQL" as mysql <<Rectangle>> {
 
-    note as note1
-        共通項目
 
-        created_by INT NOTNULL
-        modified_by INT
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-        modified_at TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-    end note
 
     entity "example" as example <<T,TRANSACTION_MARK_COLOR>> EDIT_ENTITY {
         + id INT [PK] AI
@@ -27,7 +20,7 @@ package "MySQL" as mysql <<Rectangle>> {
         email VARCHAR(255)
         deleted TINYINT NOTNULL DEFAULT '0'
     }
-    note top of example
+    note right of example
         UNIQUE KEY (`email`)
     end note
 
@@ -36,7 +29,6 @@ package "MySQL" as mysql <<Rectangle>> {
         --
         # example_id INT [FK] NOTNULL
     }
-    example ||-|{ example_relation
 
     entity "settings" as settings <<M,MASTER_MARK_COLOR>> {
         + id INT(11) [PK]
@@ -44,6 +36,26 @@ package "MySQL" as mysql <<Rectangle>> {
         name VARCHAR(32) NOTNULL
     }
 
+'    0か1	|o--
+'    1のみ	||--
+'    0以上	}o--
+'    1以上	}|--
+
+'    example ||--|{ example_relation
+'    example ||-up-|{ example_relation
+    example ||-down-|{ example_relation
+'    example ||-right-|{ example_relation
+'    example ||-left-|{ example_relation
+
+    settings -[hidden]down- example
 }
+note top of mysql
+    共通項目
+
+    created_by INT NOTNULL
+    modified_by INT
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    modified_at TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+end note
 
 @enduml
