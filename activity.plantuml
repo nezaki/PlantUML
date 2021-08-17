@@ -1,0 +1,81 @@
+@startuml
+'help themes
+'!theme black-knight
+'!theme bluegray
+'!theme cerulean
+'!theme cerulean-outline
+'!theme cyborg
+'!theme cyborg-outline
+'!theme hacker
+'!theme lightgray
+'!theme materia
+'!theme materia-outline
+'!theme metal
+'!theme minty
+!theme sandstone
+'!theme silver
+'!theme spacelab
+'!theme superhero
+'!theme superhero-outline
+'!theme united
+
+'skinparam ArrowHeadColor none
+
+title this is my title
+
+|#White|Swimlane A Alias|Swimlane A Title
+    start
+    :A-1;
+
+|#AntiqueWhite|B|
+    :B-1|
+
+|#White|C|
+    :C-1<
+
+|#AntiqueWhite|D|
+    :D-1>
+
+    if (check) then (True)
+        |Swimlane A Alias|
+            :A-3;
+
+            partition partitionTitle {
+                while (available?)
+                    :A-4;
+                endwhile
+            }
+
+            fork
+              :action 1;
+            fork again
+              :action 2;
+            end fork
+
+            switch (test?)
+                case ( condition A )
+                    :Text 1;
+                case ( condition B )
+                    :Text 2;
+                case ( condition C )
+                    :Text 3;
+            endswitch
+
+            stop
+
+    else (False)
+        |B|
+            :B-2;
+
+            note right
+	            this is a note
+	        end note
+
+	        end
+    endif
+
+legend
+    this is the legend
+endlegend
+
+@enduml
