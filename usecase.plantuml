@@ -1,0 +1,60 @@
+@startuml
+
+'!theme black-knight
+'!theme bluegray
+'!theme cerulean
+'!theme cerulean-outline
+'!theme cyborg
+'!theme cyborg-outline
+'!theme hacker
+'!theme lightgray
+'!theme materia
+'!theme materia-outline
+'!theme metal
+'!theme minty
+!theme sandstone
+'!theme silver
+'!theme spacelab
+'!theme superhero
+'!theme superhero-outline
+'!theme united
+
+'skinparam actorStyle awesome
+'skinparam actorStyle hollow
+
+skinparam BackgroundColor #White
+
+top to bottom direction
+'left to right direction
+
+title "this is my title"
+
+rectangle rectangleTitle {
+    actor "Main Admin" as Admin
+        note top of Admin : This is an example.
+    actor User as User
+}
+
+package packageTitle {
+    usecase "Use the application" as Use
+        note left of (Use)
+            A note can also
+            be on several lines
+        end note
+    usecase Start
+}
+
+note "note" as note1
+
+Admin ---> (Use)
+User --- note1
+note1 -> (Start)
+User --> (Use)
+
+note "This note is connected\nto several objects." as note2
+Start .. note2
+Use .. note2
+
+legend "this is the legend"
+
+@enduml
