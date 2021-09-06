@@ -1,0 +1,70 @@
+@startuml
+
+title this is title
+
+hide empty description
+
+[*] --> state1
+state1: this is a string
+note left
+  A note can also
+  be defined on
+  several lines
+end note
+state1 --> composite
+note on link
+  this is a state-transition note
+end note
+composite --> [*]
+state composite {
+    [*] --> composite1
+    composite1 --> composite2
+}
+note left of composite
+    This is a note
+    on a composite state
+end note
+
+
+state fork_state <<fork>>
+fork_state1 --> fork_state
+fork_state --> fork_state2
+fork_state --> fork_state3
+state join_state <<join>>
+fork_state2 --> join_state
+fork_state3 --> join_state
+join_state --> fork_state4
+
+
+state c <<choice>>
+Idle --> ReqId
+ReqId --> c
+c --> MinorId : [Id <= 10]
+c --> MajorId : [Id > 10]
+
+
+state Active {
+  [*] -> NumLockOff
+  NumLockOff --> NumLockOn : EvNumLockPressed
+  NumLockOn --> NumLockOff : EvNumLockPressed
+  --
+  [*] -> CapsLockOff
+  CapsLockOff --> CapsLockOn : EvCapsLockPressed
+  CapsLockOn --> CapsLockOff : EvCapsLockPressed
+}
+
+
+state A {
+    state X {
+    }
+    state Y {
+    }
+}
+state B {
+    state Z {
+    }
+}
+X --> Z
+Z --> Y
+
+@enduml
